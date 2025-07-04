@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c3e0e5, #a1c4fd);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h2.header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #361515;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 15px;
+            transition: border 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 500px) {
+            form {
+                padding: 20px;
+            }
+
+            h2.header {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/start">
+        <h2 class="header">Smart Timer</h2>
+        
+        <label>Сколько времени планируете работать? (часы:минуты)</label>
+        <input type="text" name="work_time" required placeholder="Например, 2:30">
+
+        <label>Сколько готовы работать без перерыва? (минуты)</label>
+        <input type="number" name="no_break" required placeholder="Например, 45">
+
+        <label>Маленький перерыв (минуты)</label>
+        <input type="number" name="short_break" required placeholder="Например, 5">
+
+        <label>Длинный перерыв (минуты)</label>
+        <input type="number" name="long_break" required placeholder="Например, 15">
+
+        <button type="submit">Запустить</button>
+    </form>
+</body>
+</html>
