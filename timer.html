@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Синхронизированный таймер</title>
+    <style>
+    html, body { 
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        font-family: sans-serif; 
+        text-align: center; 
+        background-image: linear-gradient(#423f50, #3ce27e);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .center-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .overlay-box {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 40px;
+        border-radius: 20px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    #timer {
+        font-size: 10em;
+        color: #00ccff;
+        margin: 20px 0;
+    }
+
+    #phase {
+        font-size: 4em;
+        color: #ff6666;
+        margin-bottom: 10px;
+    }
+
+    #end {
+        font-size: 2em;
+        color: #fff;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+        width: fit-content;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    #end:active,
+    #end:hover {
+        background-color: #0056b3;
+    }
+
+    </style>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="center-wrapper">
+        <div class="overlay-box">
+            <h1 style="font-size: 3em;">Таймер</h1>
+            <div id="phase">Ожидание...</div>
+            <div id="timer">00:00</div>
+            <div id="end">Закончить</div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        socket.on('timer_update', function(data) {
+            document.getElementById('phase').textContent = data.phase;
+            document.getElementById('timer').textContent = data.time;
+        });
+
+        // Отправляем на сервер команду остановить таймер по нажатию кнопки
+        const endBtn = document.getElementById('end');
+        endBtn.addEventListener('click', () => {
+            socket.emit('stop_timer');
+        });
+
+        // При получении команды перенаправить — уходим на стартовую страницу
+        socket.on('redirect_to_start', () => {
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>
